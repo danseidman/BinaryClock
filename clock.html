@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<TITLE>Not Your Grandfather's Clock</TITLE>
+<SCRIPT>
+var onImg = new Image();
+onImg.src = "./pixel-on.jpg";
+var offImg = new Image();
+offImg.src = "./pixel-off.jpg";
+var prefixes = new Array('H', 'M', 'S');
+var suffixes = new Array(80, 40, 20, 10, 8, 4, 2, 1);
+
+function UpdateClock()
+{
+  var theDate = new Date();
+  var theTime = new Array (theDate.getHours(), 
+                           theDate.getMinutes(),
+                           theDate.getSeconds());
+  var imageName;
+  var theImage;
+  var pref;
+  var suf;
+  var oldSRC;
+  var newSRC;
+  var pixelOn;
+  var decimalTime;
+  for (pref in prefixes)
+  {
+    for (suf in suffixes)
+    {
+      eval('theImage = document.PIXEL_' + prefixes[pref] + suffixes[suf]);
+      if (theImage)
+      {
+        oldSRC = theImage.src;
+        decimalTime = theTime[pref];
+        if (suf > 3)  // units digit of any component
+        {
+          decimalTime = decimalTime % 10;
+        }
+        pixelOn = Math.floor(decimalTime / suffixes[suf]) % 2;
+        newSRC = (pixelOn) ? onImg.src : offImg.src;
+        if (newSRC != oldSRC)
+        {
+          theImage.src = newSRC;
+        }
+      }
+    }
+  }   
+  setTimeout('UpdateClock()', 1000);
+}
+</SCRIPT>
+</HEAD>
+<BODY BACKGROUND="./clock-background.jpg" onLoad='UpdateClock()'>
+  <TABLE BORDER="0">
+    <TR>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD WIDTH="100">&nbsp;</TD>
+      <TD WIDTH="35"></TD>
+      <TD WIDTH="35"><IMG NAME="PIXEL_H8" SRC="./pixel-on.jpg"></TD>
+      <TD WIDTH="35"></TD>
+      <TD WIDTH="35"><IMG NAME="PIXEL_M8" SRC="./pixel-on.jpg"></TD>
+      <TD WIDTH="35"></TD>
+      <TD WIDTH="35"><IMG NAME="PIXEL_S8" SRC="./pixel-on.jpg"></TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+      <TD></TD>
+      <TD><IMG NAME="PIXEL_H4" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_M40" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_M4" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_S40" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_S4" SRC="./pixel-on.jpg"></TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+      <TD><IMG NAME="PIXEL_H20" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_H2" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_M20" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_M2" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_S20" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_S2" SRC="./pixel-on.jpg"></TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD>&nbsp;</TD>
+      <TD><IMG NAME="PIXEL_H10" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_H1" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_M10" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_M1" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_S10" SRC="./pixel-on.jpg"></TD>
+      <TD><IMG NAME="PIXEL_S1" SRC="./pixel-on.jpg"></TD>
+    </TR>
+  </TABLE>
+</BODY>
+</HTML>
